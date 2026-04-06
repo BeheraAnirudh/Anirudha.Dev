@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anirudha Behera | Senior Full-Stack Engineer</title>
+    <!-- Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === CSS Variables & High-Tech Theme === */
+        :root {
+            --bg-color: #03060d;
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(10, 15, 30, 0.6);
+            --glass-border: rgba(0, 242, 254, 0.15);
+            --glow-cyan: 0 0 20px rgba(0, 242, 254, 0.6);
+            --glow-text: 0 0 10px rgba(0, 242, 254, 0.8), 0 0 20px rgba(0, 242, 254, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--primary), var(--secondary)); border-radius: 4px; }
+
+        /* === Network Particle Background === */
+        #canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.4; }
+
+        /* === Typography & Visuals === */
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+        .glow-text { color: #fff; text-shadow: var(--glow-text); }
+        .gradient-text { background: linear-gradient(90deg, var(--primary), var(--secondary), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
+
+        /* === Navbar === */
+        nav { position: fixed; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; transition: all 0.4s ease; backdrop-filter: blur(15px); background: rgba(3, 6, 13, 0.7); border-bottom: 1px solid transparent; }
+        nav.scrolled { padding: 15px 50px; border-bottom: 1px solid var(--primary); box-shadow: 0 4px 30px rgba(0, 242, 254, 0.1); }
+        .logo { font-size: 1.5rem; font-weight: 800; font-family: 'Orbitron', sans-serif; }
+        .logo span { color: var(--primary); text-shadow: var(--glow-cyan); }
+        .nav-links a { color: var(--text-main); text-decoration: none; margin-left: 30px; font-size: 0.9rem; font-family: 'Fira Code', monospace; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); text-shadow: var(--glow-text); }
+
+        /* === Layout & Glassmorphism === */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 15px; padding: 40px; position: relative; transform-style: preserve-3d; }
+
+        /* Animated Glowing Border */
+        .animated-border { position: relative; }
+        .animated-border::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(45deg, var(--primary), var(--secondary), transparent, var(--primary)); z-index: -1; border-radius: 17px; background-size: 400%; animation: animateBorder 8s linear infinite; opacity: 0.5; }
+        @keyframes animateBorder { 0% {background-position: 0 0;} 50% {background-position: 400% 0;} 100% {background-position: 0 0;} }
+
+        .section-title { font-size: 2.8rem; margin-bottom: 50px; text-align: center; text-transform: uppercase; }
+
+        /* === Hero Section === */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
+        .hero h1 { font-size: 5rem; margin-bottom: 10px; }
+        .hero .typing-container { font-family: 'Fira Code', monospace; font-size: 1.5rem; color: var(--primary); height: 30px; margin-bottom: 30px; text-shadow: var(--glow-cyan); }
+        .hero p { max-width: 700px; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 40px; }
+        
+        .btn { padding: 15px 40px; background: rgba(0, 242, 254, 0.1); color: #fff; border: 1px solid var(--primary); border-radius: 30px; text-decoration: none; font-weight: 600; transition: all 0.3s; font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 2px; display: inline-block; cursor: pointer; }
+        .btn:hover { background: var(--primary); color: #000; box-shadow: var(--glow-cyan); transform: scale(1.05); }
+
+        /* Icon Links (LinkedIn, GitHub, Resume) */
+        .hero-icons { display: flex; gap: 25px; margin-top: 35px; }
+        .hero-icons a { display: flex; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 50%; background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.3); color: var(--primary); font-size: 1.5rem; transition: all 0.3s ease; text-decoration: none; }
+        .hero-icons a:hover { background: rgba(0, 242, 254, 0.2); color: #fff; box-shadow: var(--glow-cyan); transform: translateY(-5px); border-color: var(--primary); }
+
+        /* Profile Floating Element */
+        .profile-icon { font-size: 4rem; color: var(--primary); margin-bottom: 20px; text-shadow: var(--glow-cyan); animation: float 3s ease-in-out infinite; display: inline-block; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+
+        /* === Exhaustive Skills Section === */
+        .skill-category { margin-bottom: 30px; }
+        .skill-category h3 { color: #fff; margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
+        .skill-category h3 i { color: var(--primary); margin-right: 10px; }
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag { background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.3); color: var(--text-main); padding: 8px 15px; border-radius: 5px; font-size: 0.85rem; font-family: 'Fira Code', monospace; transition: all 0.3s ease; cursor: crosshair; }
+        .skill-tag:hover { background: rgba(0, 242, 254, 0.2); border-color: var(--primary); color: #fff; box-shadow: var(--glow-cyan); transform: translateY(-2px); }
+
+        /* === Detailed Experience Timeline === */
+        .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--glass-border); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
+        .timeline-item { padding: 20px 40px; position: relative; width: 50%; }
+        .timeline-item::after { content: ''; position: absolute; width: 20px; height: 20px; right: -10px; background-color: var(--bg-color); border: 4px solid var(--primary); top: 30px; border-radius: 50%; z-index: 1; box-shadow: var(--glow-cyan); }
+        .left { left: 0; } .right { left: 50%; } .right::after { left: -10px; }
+        
+        .timeline-content { padding: 30px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 15px; transition: 0.3s; position: relative; }
+        .timeline-content:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15); transform: scale(1.02); z-index: 10; }
+        .timeline-content h3 { color: var(--primary); font-size: 1.4rem; margin-bottom: 5px; text-shadow: var(--glow-text); }
+        .timeline-content h4 { color: #fff; font-family: 'Inter', sans-serif; font-weight: 600; margin-bottom: 5px; }
+        .timeline-content span { display: inline-block; background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 5px; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 15px; font-family: 'Fira Code', monospace; border: 1px solid rgba(255,255,255,0.1); }
+        
+        .timeline-content ul { list-style: none; padding-left: 0; margin-bottom: 20px; }
+        .timeline-content li { margin-bottom: 12px; font-size: 0.95rem; color: #cbd5e1; position: relative; padding-left: 25px; line-height: 1.5; }
+        .timeline-content li::before { content: '▹'; position: absolute; left: 0; top: 0; color: var(--primary); font-size: 1.2rem; font-weight: bold; }
+
+        .tech-stack-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;}
+        .tech-pill { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--primary); background: rgba(0, 242, 254, 0.05); padding: 4px 8px; border-radius: 3px; border: 1px solid rgba(0, 242, 254, 0.2); }
+
+        /* === Education & Extra === */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+        /* === Animations === */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media screen and (max-width: 900px) {
+            .timeline::after { left: 31px; } .timeline-item { width: 100%; padding-left: 70px; padding-right: 20px; } .timeline-item::after { left: 21px; } .right { left: 0%; }
+            .grid-2 { grid-template-columns: 1fr; } .hero h1 { font-size: 3.5rem; } nav { padding: 15px 20px; } .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">Anirudha<span>.Dev</span></div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#skills">Skills Matrix</a>
+            <a href="#experience">Experience</a>
+            <a href="resume.html">View Resume</a> <!-- Links to the new page -->
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1 class="gradient-text reveal active">Anirudha Behera</h1>
+        <div class="typing-container glow-text" id="typing-text"></div>
+        <p class="reveal active" style="transition-delay: 0.2s;">11+ years engineering high-performance SPA/SSR architectures, event-driven microservices, and GenAI-integrated solutions across the full software developement cycle.</p>
+        
+        <!-- Updated Contact Button -->
+        <div class="reveal active" style="transition-delay: 0.4s;">
+            <a href="mailto:beheraanirudha24@gmail.com" class="btn"><i class="fas fa-terminal"></i> Initialize Contact</a>
+        </div>
+
+        <!-- NEW: 3 Glowing Icons -->
+        <div class="hero-icons reveal active" style="transition-delay: 0.6s;">
+            <!-- REPLACE '#' with your actual LinkedIn link later -->
+            <a href="#" target="_blank" title="LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
+            <!-- REPLACE '#' with your actual GitHub link later -->
+            <a href="#" target="_blank" title="GitHub Profile"><i class="fab fa-github"></i></a>
+            <!-- Links to the new resume page -->
+            <a href="resume.html" title="Interactive Resume PDF"><i class="fas fa-file-pdf"></i></a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="container" id="about">
+        <h2 class="section-title gradient-text reveal">System Profile</h2>
+        <div class="glass-card animated-border reveal" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+            <div style="text-align: center;"><div class="profile-icon"><i class="fas fa-microchip"></i></div></div>
+            <p style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.8; text-align: justify;">
+                Senior Full-Stack Engineer steering the complete Software Development Lifecycle (SDLC) from architectural design and conceptualization to CI/CD deployment and maintenance. I specialize in the MERN stack, TypeScript, Python, and Golang, possessing deep expertise in orchestrating high-performance SPA/SSR architectures across web, mobile (React Native), and PWA platforms. My UI/UX philosophy bridges robust scalable CSS methodologies (BEM, Tailwind, MUI) with user-centered, accessible, and reactive interfaces. 
+                <br><br>
+                On the backend, I architect resilient, modular microservices and RESTful/GraphQL APIs secured via OAuth 2.0 and JWT. My infrastructure proficiency spans complex cloud deployments, serverless workflows, and event-driven architectures across AWS, Azure, and GCP. Furthermore, I actively bridge traditional software engineering with the future by integrating advanced <strong>AI/ML and GenAI solutions (ClaudeAI, AWS Bedrock, SageMaker)</strong>, transforming raw data into predictive, real-time intelligence for enterprise-scale platforms.
+            </p>
+        </div>
+    </section>
+
+    <!-- Exhaustive Skills Dashboard -->
+    <section class="container" id="skills">
+        <h2 class="section-title gradient-text reveal">Technical Arsenal Matrix</h2>
+        <div class="glass-card reveal" style="padding: 30px;">
+            <div class="skill-category">
+                <h3><i class="fas fa-laptop-code"></i> Frontend, UI/UX & Mobile</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">JavaScript (ES6+/ECMAScript)</span><span class="skill-tag">TypeScript</span><span class="skill-tag">React.js 18.3.2</span><span class="skill-tag">Next.js 14/15</span>
+                    <span class="skill-tag">Angular / AngularJS / Angular 6</span><span class="skill-tag">Vue.js / Vuex / Vue Router</span><span class="skill-tag">React Native</span>
+                    <span class="skill-tag">HTML5 / CSS3</span><span class="skill-tag">Tailwind CSS</span><span class="skill-tag">Bootstrap</span><span class="skill-tag">SASS/LESS</span>
+                    <span class="skill-tag">jQuery</span><span class="skill-tag">AJAX / JSON / XML</span><span class="skill-tag">DOM Manipulation</span><span class="skill-tag">UI/UX Design</span>
+                    <span class="skill-tag">Wireframes</span><span class="skill-tag">Mobile Applications Development</span><span class="skill-tag">Cross-Platform / Multiplatform</span><span class="skill-tag">Web Browsers</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-server"></i> Backend, APIs & Architecture</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">Node.js 21</span><span class="skill-tag">Express.js</span><span class="skill-tag">Nest.js</span><span class="skill-tag">Python Scripting</span><span class="skill-tag">Golang</span>
+                    <span class="skill-tag">Spring Boot / Spring MVC</span><span class="skill-tag">Java Servlets / JSP</span><span class="skill-tag">Apache Struts / Tomcat</span>
+                    <span class="skill-tag">RESTful APIs / SOAP / SWAGGER OAS</span><span class="skill-tag">GraphQL</span><span class="skill-tag">Microservices Architecture</span>
+                    <span class="skill-tag">MVC Design Pattern</span><span class="skill-tag">Web Services</span><span class="skill-tag">Middleware</span><span class="skill-tag">Sockets</span><span class="skill-tag">OAuth / Authentication</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-database"></i> Databases, ORM & Data Pipelines</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">PrismORM</span><span class="skill-tag">MongoDB</span><span class="skill-tag">PostgreSQL</span><span class="skill-tag">MySQL</span><span class="skill-tag">Oracle Database</span>
+                    <span class="skill-tag">Neo4j</span><span class="skill-tag">SQL (Structured Query Language)</span><span class="skill-tag">JDBC</span><span class="skill-tag">Database Design & Optimization</span>
+                    <span class="skill-tag">Data Management & Storage</span><span class="skill-tag">Apache Kafka</span><span class="skill-tag">Query Optimization</span><span class="skill-tag">Transaction Processing</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-cloud"></i> Cloud, DevOps & CI/CD</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">AWS (EC2, Lambda, S3, CloudFront, SNS, SQS)</span><span class="skill-tag">Microsoft Azure</span><span class="skill-tag">GCP</span><span class="skill-tag">Cloud Computing</span>
+                    <span class="skill-tag">Docker</span><span class="skill-tag">Kubernetes</span><span class="skill-tag">Jenkins</span><span class="skill-tag">YARN4</span><span class="skill-tag">GitHub / Gerrit / Subversion</span>
+                    <span class="skill-tag">DevOps</span><span class="skill-tag">Continuous Integration & Deployment</span><span class="skill-tag">Apache Ant</span><span class="skill-tag">Webpack / Grunt / Gulp</span>
+                    <span class="skill-tag">Performance Tuning</span><span class="skill-tag">Automation</span><span class="skill-tag">Network Routers</span><span class="skill-tag">Hubs</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-brain"></i> AI, Testing & Methodologies</h3>
+                <div class="skills-grid">
+                   <span class="skill-tag glow-text">ClaudeAI</span><span class="skill-tag">Artificial Intelligence (AI)</span><span class="skill-tag">Machine Learning</span><span class="skill-tag">Predictive Modeling</span>
+                    <span class="skill-tag">Test Driven Development (TDD)</span><span class="skill-tag">Selenium</span><span class="skill-tag">Software Testing / Automation</span><span class="skill-tag">Usability Testing</span>
+                    <span class="skill-tag">Agile / Scrum / Kanban</span><span class="skill-tag">Requirements Management</span><span class="skill-tag">Product Management / Design</span>
+                    <span class="skill-tag">Healthcare / Telemedicine / EMR</span><span class="skill-tag">HIPAA / Regulatory Compliance</span><span class="skill-tag">InfoSec</span><span class="skill-tag">Financial Operations</span>
+                    <span class="skill-tag">SEO</span><span class="skill-tag">Process Improvement</span><span class="skill-tag">Leadership</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Experience Section -->
+    <section class="container" id="experience">
+        <h2 class="section-title gradient-text reveal">Professional Experience</h2>
+        <div class="timeline">
+            <!-- PNC -->
+            <div class="timeline-item left reveal">
+                <div class="timeline-content" data-tilt data-tilt-max="3" data-tilt-glare="true" data-tilt-max-glare="0.1">
+                    <h3>Senior React/Node.js Developer</h3>
+                    <h4>PNC | Pittsburgh, PA</h4>
+                    <span>Apr 2024 - Current</span>
+                    <ul>
+                       <li>Developed a robust financial data intelligence platform enabling real-time portfolio tracking, predictive analytics, and strict compliance reporting.</li>
+                        <li>Integrated event-driven microservices with advanced GenAI intelligence leveraging <strong>ClaudeAI</strong> and AWS Bedrock to enhance enterprise decision-making.</li>
+                        <li>Engineered database interactions utilizing <strong>PrismORM</strong> for optimized, secure data querying and persistence.</li>
+                        <li>Accelerated build processes and managed complex project dependencies efficiently utilizing <strong>YARN4</strong>.</li>
+                        <li>Built highly reusable React 18.3.2 and Next.js 15 components utilizing TypeScript and ES6+, optimizing state with Redux Toolkit and caching with React Query.</li>
+                        <li>Designed adaptive, brand-consistent UI/UX via Atomic Design, Material UI, Tailwind CSS, and Figma across React Native and Flutter applications.</li>
+                    </ul>
+                    <div class="tech-stack-pills"><span class="tech-pill">ClaudeAI</span><span class="tech-pill">PrismORM</span><span class="tech-pill">YARN4</span><span class="tech-pill">React 18</span><span class="tech-pill">Next.js 15</span><span class="tech-pill">Node.js</span><span class="tech-pill">TypeScript</span></div>
+                </div>
+            </div>
+            <!-- HCA Healthcare -->
+            <div class="timeline-item right reveal">
+                <div class="timeline-content" data-tilt data-tilt-max="3" data-tilt-glare="true" data-tilt-max-glare="0.1">
+                    <h3>React/Node.js Developer</h3>
+                    <h4>HCA Healthcare | Nashville, TN</h4>
+                    <span>May 2021 - Mar 2024</span>
+                    <ul>
+                         <li>Developed a HIPAA-compliant Telemedicine Platform facilitating secure video conferencing, EHR/EMR management, and event-driven patient interactions.</li>
+                        <li>Engineered secure APIs utilizing Node.js, Nest.js, Spring Boot, and Python with JWT/OAuth 2.0 authentication against PostgreSQL, MongoDB, and Neo4j databases.</li>
+                        <li>Built scalable serverless and batch microservices utilizing AWS Lambda, SQS, SNS, Kinesis, and Kafka for reliable message processing.</li>
+                        <li>Migrated legacy React Class Components to Functional Hooks, establishing dynamic SPAs via React Router DOM and Next.js SSR/SSG.</li>
+                        <li>Integrated EHR backend services with AWS Bedrock and SageMaker to drive actionable AI insights into patient healthcare data.</li>
+                    </ul>
+                    <div class="tech-stack-pills">span class="tech-pill">React</span><span class="tech-pill">Node.js</span><span class="tech-pill">Nest.js</span><span class="tech-pill">AWS Bedrock</span><span class="tech-pill">Kafka</span><span class="tech-pill">Neo4j</span><span class="tech-pill">HIPAA</span></div>
+                </div>
+            </div>
+            <!-- Arhaus -->
+            <div class="timeline-item left reveal">
+                <div class="timeline-content" data-tilt data-tilt-max="3" data-tilt-glare="true" data-tilt-max-glare="0.1">
+                    <h3>MERN Developer</h3>
+                    <h4>Arhaus | Boston Heights, OH</h4>
+                    <span>Jul 2019 - Apr 2021</span>
+                    <ul>
+                         <li>Architected a comprehensive Product Management Services platform for seamless catalog, inventory control, and advanced product search.</li>
+                        <li>Implemented robust MERN stack solutions alongside Golang and Spring Boot backend microservices deployed via Docker and Kubernetes.</li>
+                        <li>Designed secure GraphQL endpoints and REST APIs, rigorously documented via OpenAPI/Swagger.</li>
+<li>Established real-time data pipelines using Node.js, Kafka, and Spark Streaming for instantaneous inventory updates.</li>
+                        <li>Migrated monolithic applications to microservices utilizing the Strangler Pattern for drastically improved maintainability.</li>
+                    </ul>
+                    <div class="tech-stack-pills"><span class="tech-pill">MERN Stack</span><span class="tech-pill">Golang</span><span class="tech-pill">Spring Boot</span><span class="tech-pill">Docker/K8s</span><span class="tech-pill">GraphQL</span><span class="tech-pill">Spark</span></div>
+                </div>
+            </div>
+            <!-- First Financial Bank -->
+            <div class="timeline-item right reveal">
+                <div class="timeline-content" data-tilt data-tilt-max="3" data-tilt-glare="true" data-tilt-max-glare="0.1">
+                    <h3>Full Stack Developer</h3>
+                    <h4>First Financial Bank | Cincinnati, OH</h4>
+                    <span>Apr 2016 - Jun 2019</span>
+                    <ul>
+                       <li>Developed responsive, mobile-first banking applications leveraging Angular 6, React.js, Vue.js, and Next.js for high-traffic portals.</li>
+                        <li>Engineered full-stack logic utilizing the MEAN stack, Golang, and Spring Boot, integrating securely with core banking legacy services.</li>
+                        <li>Architected resilient event-driven systems utilizing AWS Lambda, Socket.io, Kafka, and CloudWatch for real-time transaction notifications.</li>
+                        <li>Optimized complex database queries across MongoDB, PostgreSQL, and Oracle SQL ensuring strict regulatory compliance and audit logging.</li>
+                    </ul>
+                    <div class="tech-stack-pills"><span class="tech-pill">Angular 6</span><span class="tech-pill">Vue.js</span><span class="tech-pill">MEAN Stack</span><span class="tech-pill">Oracle SQL</span><span class="tech-pill">AWS Lambda</span><span class="tech-pill">Socket.io</span></div>
+                </div>
+            </div>
+            <!-- Travelers -->
+            <div class="timeline-item left reveal">
+                <div class="timeline-content" data-tilt data-tilt-max="3" data-tilt-glare="true" data-tilt-max-glare="0.1">
+                    <h3>UI/UX Developer</h3>
+                    <h4>Travelers | New York, NY</h4>
+                    <span>May 2014 - Mar 2016</span>
+                    <ul>
+                        <li>Designed and developed dynamic Single Page Applications (SPAs) leveraging HTML5, CSS3, JavaScript, jQuery, Angular 2, and Vue.js.</li>
+                        <li>Architected modular Deals and Reports components integrating REST APIs, SOAP web services, and asynchronous AJAX calls.</li>
+                        <li>Collaborated closely with product designers to iteratively improve accessibility, usability, and cross-browser consistency.</li>
+                        <li>Automated rigorous UI testing with Selenium and streamlined module bundling processes utilizing Apache Ant and Webpack.</li>
+                    </ul>
+                    <div class="tech-stack-pills"><span class="tech-pill">Angular 2</span><span class="tech-pill">jQuery</span><span class="tech-pill">AJAX</span><span class="tech-pill">SOAP</span><span class="tech-pill">Selenium</span><span class="tech-pill">Apache Ant</span><span class="tech-pill">Webpack</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Certifications -->
+    <section class="container" id="education">
+        <h2 class="section-title gradient-text reveal">Education & Certifications</h2>
+        <div class="grid-2">
+            <div class="glass-card animated-border reveal" data-tilt data-tilt-max="2" data-tilt-glare="true" data-tilt-max-glare="0.1">
+                <h3 style="color: var(--primary); margin-bottom: 20px; text-shadow: var(--glow-cyan);"><i class="fas fa-graduation-cap"></i> Academic Background</h3>
+                <div style="margin-bottom: 25px; border-left: 2px solid var(--primary); padding-left: 15px;">
+                    <h4 style="color: #fff; font-size: 1.2rem; font-family: 'Inter', sans-serif;">MSc in Computer Science</h4>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 5px;">Loyola University | Chicago, IL</p>
+                    <span style="display: inline-block; background: rgba(0,242,254,0.1); padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; color: var(--primary); margin-top: 5px; font-family: 'Fira Code', monospace;">2013 - 2014</span>
+                    <p style="color: #cbd5e1; font-size: 0.85rem; margin-top: 8px;">• Computer Science<br>• Information Technology Management</p>
+                </div>
+                <div style="border-left: 2px solid var(--secondary); padding-left: 15px;">
+                    <h4 style="color: #fff; font-size: 1.2rem; font-family: 'Inter', sans-serif;">Bachelor of Technology in CS</h4>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 5px;">Anna University | Chennai, India</p>
+                    <span style="display: inline-block; background: rgba(0,242,254,0.1); padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; color: var(--primary); margin-top: 5px; font-family: 'Fira Code', monospace;">2009 - 2013</span>
+                </div>
+            </div>
+            
+            <div class="glass-card animated-border reveal" data-tilt data-tilt-max="2" data-tilt-glare="true" data-tilt-max-glare="0.1">
+                <h3 style="color: var(--primary); margin-bottom: 20px; text-shadow: var(--glow-cyan);"><i class="fas fa-certificate"></i> Certifications & Details</h3>
+                <ul style="color: #cbd5e1; margin-bottom: 25px; padding-left: 20px; line-height: 2;">
+                    <li><i class="fas fa-check" style="color: var(--primary); margin-right: 5px;"></i> <strong>React Developer</strong> Certification</li>
+                    <li><i class="fas fa-check" style="color: var(--primary); margin-right: 5px;"></i> <strong>Node.js Services Developer</strong> Certification</li>
+                    <li><i class="fas fa-globe-americas" style="color: var(--primary); margin-right: 5px;"></i> Authorized to work in the <strong>United States</strong></li>
+                    <li><i class="fas fa-language" style="color: var(--primary); margin-right: 5px;"></i> Fluent in <strong>English</strong></li>
+                </ul>
+                <h4 style="color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Extracurriculars</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 5px; border: 1px solid var(--glass-border);">Swimming, Pool Table, Cricket, Painting/Drawing, Reading</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px 20px; border-top: 1px solid var(--glass-border); margin-top: 50px; background: rgba(3, 6, 13, 0.9);">
+        <p style="color: var(--text-muted); font-family: 'Fira Code', monospace; font-size: 0.9rem;">
+            &copy; 2024 Anirudha Behera. Engineered for the future.
+        </p>
+    </footer>
+
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script>
+        const textArray =["Senior React Developer", "Node.js Architect", "Cloud & GenAI Engineer", "UI/UX Master"];
+        let textIndex = 0; let charIndex = 0; const typingSpeed = 80; const erasingSpeed = 40; const newTextDelay = 2000;
+        const typedTextSpan = document.getElementById("typing-text");
+
+        function type() {
+            if (charIndex < textArray[textIndex].length) {
+                typedTextSpan.textContent += textArray[textIndex].charAt(charIndex); charIndex++; setTimeout(type, typingSpeed);
+            } else { setTimeout(erase, newTextDelay); }
+        }
+        function erase() {
+            if (charIndex > 0) {
+                typedTextSpan.textContent = textArray[textIndex].substring(0, charIndex - 1); charIndex--; setTimeout(erase, erasingSpeed);
+            } else { textIndex++; if (textIndex >= textArray.length) textIndex = 0; setTimeout(type, typingSpeed + 500); }
+        }
+        document.addEventListener("DOMContentLoaded", function() { setTimeout(type, newTextDelay); });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
+        });
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) { reveals[i].classList.add("active"); }
+            }
+        }
+        window.addEventListener("scroll", reveal); reveal();
+
+        const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particlesArray =[];
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color; }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+                this.x += this.directionX; this.y += this.directionY; this.draw();
+            }
+        }
+        function init() {
+            particlesArray =[]; let numberOfParticles = (canvas.height * canvas.width) / 12000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 1) - 0.5; let directionY = (Math.random() * 1) - 0.5;
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, '#00f2fe'));
+            }
+        }
+        function connect() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        ctx.strokeStyle = 'rgba(0, 242, 254,' + (1 - (distance / 20000)) + ')';
+                        ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
+                    }
+                }
+            }
+        }
+        function animate() { requestAnimationFrame(animate); ctx.clearRect(0, 0, innerWidth, innerHeight); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); } connect(); }
+        window.addEventListener('resize', function() { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
+        init(); animate();
+    </script>
+</body>
+</html>

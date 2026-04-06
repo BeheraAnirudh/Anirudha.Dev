@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | Anirudha Behera</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Shared High-Tech Theme Variables */
+        :root {
+            --bg-color: #03060d;
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --text-main: #e2e8f0;
+            --glass-bg: rgba(10, 15, 30, 0.7);
+            --glass-border: rgba(0, 242, 254, 0.2);
+            --glow-cyan: 0 0 20px rgba(0, 242, 254, 0.6);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        #canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.4; }
+
+        /* Navbar */
+        nav { width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; backdrop-filter: blur(15px); background: rgba(3, 6, 13, 0.8); border-bottom: 1px solid var(--primary); box-shadow: 0 4px 30px rgba(0, 242, 254, 0.1); }
+        .logo { font-size: 1.5rem; font-weight: 800; font-family: 'Orbitron', sans-serif; text-decoration: none; color: #fff; }
+        .logo span { color: var(--primary); text-shadow: var(--glow-cyan); }
+        .back-btn { color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-family: 'Fira Code', monospace; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .back-btn:hover { color: var(--primary); text-shadow: 0 0 10px rgba(0, 242, 254, 0.8); }
+
+        /* Resume Container */
+        .resume-container { flex: 1; max-width: 1000px; width: 95%; margin: 40px auto; display: flex; flex-direction: column; gap: 20px; }
+        
+        .resume-toolbar { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .resume-toolbar h2 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #fff; text-shadow: var(--glow-cyan); }
+        
+        .download-btn { padding: 10px 25px; background: rgba(0, 242, 254, 0.1); color: #fff; border: 1px solid var(--primary); border-radius: 5px; text-decoration: none; font-weight: 600; font-family: 'Fira Code', monospace; transition: all 0.3s; display: flex; align-items: center; gap: 10px; }
+        .download-btn:hover { background: var(--primary); color: #000; box-shadow: var(--glow-cyan); transform: translateY(-2px); }
+
+        /* PDF Viewer Wrapper */
+        .pdf-wrapper { width: 100%; height: 75vh; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .pdf-wrapper iframe { width: 100%; height: 100%; border: none; }
+        
+        /* Responsive */
+        @media screen and (max-width: 768px) { nav { padding: 15px 20px; } .resume-toolbar { flex-direction: column; gap: 15px; text-align: center; } .pdf-wrapper { height: 60vh; } }
+    </style>
+</head>
+<body>
+
+    <!-- Particle Background -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">Anirudha<span>.Dev</span></a>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Return to Main Terminal</a>
+    </nav>
+
+    <!-- Interactive Resume Section -->
+    <div class="resume-container">
+        <!-- Toolbar above PDF -->
+        <div class="resume-toolbar">
+            <h2><i class="fas fa-file-contract"></i> Interactive Resume</h2>
+           
+            <a href="Anirudha_Behera.pdf" download="Anirudha_Behera_Resume.pdf" class="download-btn">
+                <i class="fas fa-download"></i> Download PDF
+            </a>
+        </div>
+
+        <!-- PDF Viewer (Browser native engine allows zooming, highlighting, scrolling) -->
+        <div class="pdf-wrapper">
+         
+            <iframe src="Anirudha_Behera.pdf" title="Anirudha Behera Resume"></iframe>
+        </div>
+    </div>
+
+    <!-- Background Animation Script -->
+    <script>
+        const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particlesArray =[];
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color; }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+                this.x += this.directionX; this.y += this.directionY; this.draw();
+            }
+        }
+        function init() {
+            particlesArray =[]; let numberOfParticles = (canvas.height * canvas.width) / 12000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 1) - 0.5; let directionY = (Math.random() * 1) - 0.5;
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, '#00f2fe'));
+            }
+        }
+        function connect() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        ctx.strokeStyle = 'rgba(0, 242, 254,' + (1 - (distance / 20000)) + ')';
+                        ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
+                    }
+                }
+            }
+        }
+        function animate() { requestAnimationFrame(animate); ctx.clearRect(0, 0, innerWidth, innerHeight); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); } connect(); }
+        window.addEventListener('resize', function() { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
+        init(); animate();
+    </script>
+</body>
+</html>
